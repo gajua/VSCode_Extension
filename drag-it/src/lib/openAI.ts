@@ -1,34 +1,47 @@
-// chat gpt가 알려준 OpenAI API 호출하는 코드 예시
 import axios from 'axios';
-const apiKey = process.env.OPENAI_API_KEY;
+require('dotenv').config();
 
-async function callOpenAI(endpoint: string, data: any) {
-  const response = await axios.post(
-    `https://api.openai.com/v1/${endpoint}`,
-    data,
-    {
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization: `Bearer ${apiKey}`,
-      },
-    }
-  );
+const OPENAI_API_KEY = process.env.OPENAI_API_KEY;
 
-  return response.data;
+interface CompletionParams {
+  model: string;
+  prompt: string;
+  temperature?: number;
+  max_tokens?: number;
+  n?: number;
+  stop?: string | string[];
 }
 
-async function exampleUsage() {
-  const prompt = 'The meaning of life is';
-  const model = 'text-davinci-002';
-  const maxTokens = 5;
-
-  const response = await callOpenAI('completions', {
-    prompt,
+async function generateCode(prompt: string, language: string): Promise<string> {
+  const model = `davinci-${language}`;
+  const params: CompletionParams = {
     model,
-    max_tokens: maxTokens,
+    prompt,
+    max_tokens: 1024,
+    n: 1,
+    stop: '\n',
+  };
+
+  const response = await axios.post('https://api.openai.com/v1/engines/davinci-codex/completions', params, {
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${OPENAI_API_KEY}`,
+    },
   });
 
-  console.log(response.choices[0].text);
+  const { choices } = response.data?.choices?.[0];
+  if (!choices || choices.length === 0) {
+    throw new Error('Failed to generate code.');
+  }
+
+  return choices[0].text.trim();
 }
 
-exampleUsage();
+// Example usage
+generateCode('Create a function that doubles a given number', 'python')
+  .then((code) => {
+    console.log(code);
+  })
+  .catch((err) => {
+    console.error(err);
+  });
