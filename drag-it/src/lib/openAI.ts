@@ -12,7 +12,10 @@ interface CompletionParams {
   stop?: string | string[];
 }
 
-async function generateCode(prompt: string, language: string): Promise<string> {
+export const generateCode = async (
+  prompt: string,
+  language: string
+): Promise<string> => {
   const model = `davinci-${language}`;
   const params: CompletionParams = {
     model,
@@ -22,12 +25,16 @@ async function generateCode(prompt: string, language: string): Promise<string> {
     stop: '\n',
   };
 
-  const response = await axios.post('https://api.openai.com/v1/engines/davinci-codex/completions', params, {
-    headers: {
-      'Content-Type': 'application/json',
-      Authorization: `Bearer ${OPENAI_API_KEY}`,
-    },
-  });
+  const response = await axios.post(
+    'https://api.openai.com/v1/engines/davinci-codex/completions',
+    params,
+    {
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${OPENAI_API_KEY}`,
+      },
+    }
+  );
 
   const { choices } = response.data?.choices?.[0];
   if (!choices || choices.length === 0) {
@@ -35,13 +42,13 @@ async function generateCode(prompt: string, language: string): Promise<string> {
   }
 
   return choices[0].text.trim();
-}
+};
 
 // Example usage
-generateCode('Create a function that doubles a given number', 'python')
-  .then((code) => {
-    console.log(code);
-  })
-  .catch((err) => {
-    console.error(err);
-  });
+// generateCode('Create a function that doubles a given number', 'python')
+//   .then((code) => {
+//     console.log(code);
+//   })
+//   .catch((err) => {
+//     console.error(err);
+//   });
