@@ -1,21 +1,30 @@
 {
   "name": "drag-it",
   "displayName": "Drag It",
-  "description": "If you Drag it? OpenAI will makes your command a reality",
+  "description": "Generate code using OpenAI Codex",
   "version": "0.0.1",
+  "publisher": "sewon_is_amazing",
   "engines": {
     "vscode": "^1.76.0"
   },
   "categories": [
     "Other"
   ],
-  "activationEvents": [],
+  "activationEvents": ["onCommand:drag-it.generateCode"],
   "main": "./dist/extension.js",
   "contributes": {
     "commands": [
       {
-        "command": "drag-it.helloWorld",
-        "title": "Hello World"
+        "command": "drag-it.generateCode",
+        "title": "Generate code from selection"
+      }
+    ],
+    "keybindings": [
+      {
+        "command": "drag-it.generateCode",
+        "key": "ctrl+space ctrl+enter",
+        "mac": "cmd+space cmd+enter",
+        "when": "editorTextFocus && !editorReadonly && !suggestWidgetVisible"
       }
     ]
   },

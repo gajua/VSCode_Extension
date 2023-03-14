@@ -12,21 +12,18 @@ interface CompletionParams {
   stop?: string | string[];
 }
 
-export const generateCode = async (
-  prompt: string,
-  language: string
-): Promise<string> => {
-  const model = `davinci-${language}`;
+export const generateText = async (prompt: string): Promise<string> => {
+  const model = 'text-davinci-002';
   const params: CompletionParams = {
     model,
     prompt,
-    max_tokens: 1024,
+    max_tokens: 60,
     n: 1,
     stop: '\n',
   };
 
   const response = await axios.post(
-    'https://api.openai.com/v1/engines/davinci-codex/completions',
+    'https://api.openai.com/v1/completions',
     params,
     {
       headers: {
@@ -38,17 +35,8 @@ export const generateCode = async (
 
   const { choices } = response.data?.choices?.[0];
   if (!choices || choices.length === 0) {
-    throw new Error('Failed to generate code.');
+    throw new Error('Failed to generate text.');
   }
 
   return choices[0].text.trim();
 };
-
-// Example usage
-// generateCode('Create a function that doubles a given number', 'python')
-//   .then((code) => {
-//     console.log(code);
-//   })
-//   .catch((err) => {
-//     console.error(err);
-//   });
