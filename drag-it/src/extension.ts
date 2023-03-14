@@ -56,8 +56,12 @@ export function activate(context: vscode.ExtensionContext) {
       }
 
       const { selection } = editor;
-      const prompt = editor.document.getText(selection);
+      if (selection.isEmpty) {
+        vscode.window.showErrorMessage('No text selected.');
+        return;
+      }
 
+      const prompt = editor.document.getText(selection);
       const language = editor.document.languageId;
       const generatedCode = await generateCode(prompt, language);
 
