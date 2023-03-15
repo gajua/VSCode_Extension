@@ -13,7 +13,7 @@ interface CompletionParams {
 }
 
 export const generateText = async (prompt: string): Promise<string> => {
-  const model = 'text-davinci-002';
+  const model = 'text-davinci-003';
   const params: CompletionParams = {
     model,
     prompt,

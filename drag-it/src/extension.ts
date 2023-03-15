@@ -1,6 +1,7 @@
 import * as vscode from 'vscode';
 import axios from 'axios';
-require('dotenv').config();
+const dotenv = require('dotenv');
+dotenv.config();
 
 const OPENAI_API_KEY = process.env.OPENAI_API_KEY;
 
