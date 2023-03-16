@@ -1,5 +1,6 @@
-import axios from 'axios';
-require('dotenv').config();
+import axios from "axios";
+import { languages } from "vscode";
+require("dotenv").config();
 
 const OPENAI_API_KEY = process.env.OPENAI_API_KEY;
 
@@ -12,22 +13,23 @@ interface CompletionParams {
   stop?: string | string[];
 }
 
-export const generateText = async (prompt: string): Promise<string> => {
-  const model = 'text-davinci-003';
+export default async (prompt: string, languages: string): Promise<string> => {
+  // const model = "text-davinci-003";
+  const model = `davinci-${language}`;
   const params: CompletionParams = {
     model,
     prompt,
     max_tokens: 60,
     n: 1,
-    stop: '\n',
+    stop: "\n",
   };
 
   const response = await axios.post(
-    'https://api.openai.com/v1/completions',
+    "https://api.openai.com/v1/completions",
     params,
     {
       headers: {
-        'Content-Type': 'application/json',
+        "Content-Type": "application/json",
         Authorization: `Bearer ${OPENAI_API_KEY}`,
       },
     }
@@ -35,7 +37,7 @@ export const generateText = async (prompt: string): Promise<string> => {
 
   const { choices } = response.data?.choices?.[0];
   if (!choices || choices.length === 0) {
-    throw new Error('Failed to generate text.');
+    throw new Error("Failed to generate text.");
   }
 
   return choices[0].text.trim();
