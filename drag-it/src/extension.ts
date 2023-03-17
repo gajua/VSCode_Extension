@@ -64,8 +64,8 @@ export function activate(context: vscode.ExtensionContext) {
       }
 
       const prompt = editor.document.getText(selection);
-      const language = editor.document.languageId;
-      const generatedCode = await openAI(prompt, language);
+      const languages = editor.document.languageId;
+      const generatedCode = await openAI(prompt, languages);
 
       editor.edit((editBuilder) => {
         editBuilder.replace(selection, generatedCode);

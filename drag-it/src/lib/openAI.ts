@@ -15,12 +15,12 @@ interface CompletionParams {
 
 export default async (prompt: string, languages: string): Promise<string> => {
   // const model = "text-davinci-003";
-  const model = `davinci-${language}`;
+  const model = `davinci-${languages}`;
   const params: CompletionParams = {
     model,
     prompt,
-    max_tokens: 60,
-    n: 1,
+    max_tokens: 1024,
+    n: 0.9,
     stop: "\n",
   };
 
