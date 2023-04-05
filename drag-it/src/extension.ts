@@ -1,5 +1,4 @@
 import * as vscode from 'vscode';
-import axios from 'axios';
 import { chatGPT } from './chatGPT';
 require('dotenv').config(); // .env 파일 로드하기
 
@@ -45,16 +44,16 @@ export function activate(context: vscode.ExtensionContext) {
       for (const selection of selections) {
         const selectedText = editor.document.getText(selection);
         vscode.window.showInformationMessage(selectedText);
-      }
 
-      // Send selected text to OpenAI API
-      const selectedTexts = editor.document.getText(editor.selection);
-      const message = [['user', selectedTexts]];
-      const parameters = { max_tokens: 1024, n: 1, stop: ['\n'] };
-      const response = await chatGPT(message, parameters);
-      editor.edit((editBuilder) => {
-        editBuilder.insert(editor.selection.active, response);
-      });
+        // Send selected text to OpenAI API
+        const message = [['user', selectedText]];
+        const parameters = { max_tokens: 1024, n: 0.8, stop: ['\n'] };
+        const response = await chatGPT(message, parameters);
+
+        editor.edit((editBuilder) => {
+          editBuilder.replace(selection, response);
+        });
+      }
     }
   );
 
