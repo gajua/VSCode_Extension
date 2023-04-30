@@ -13,7 +13,7 @@
   "activationEvents": [
     "onCommand:drag-it.generateCode"
   ],
-  "main": "./extension.js",
+  "main": "./dist/extension.js",
   "contributes": {
     "commands": [
       {
