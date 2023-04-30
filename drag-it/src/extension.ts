@@ -17,12 +17,21 @@ export function activate(context: vscode.ExtensionContext) {
         vscode.window.showErrorMessage("No text selected.");
         return;
       }
-
+        
       const prompt = editor.document.getText(selection);
       const languages = editor.document.languageId;
-      const generatedCode = await openAI(prompt, languages);
+      let generatedCode = '';
+
+      try {
+        generatedCode = await openAI(prompt, languages);
+      } catch (error:any) {
+        vscode.window.showErrorMessage(`Error generating code: ${error.message}`);
+        return;
+      }
 
       editor.edit((editBuilder) => {
+        console.log(generatedCode)
+        vscode.window.showErrorMessage(generatedCode);
         editBuilder.replace(selection, generatedCode);
       });
     }
@@ -30,5 +39,6 @@ export function activate(context: vscode.ExtensionContext) {
 
   context.subscriptions.push(disposable);
 }
+
 
 export function deactivate() {}

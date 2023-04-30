@@ -1,41 +1,44 @@
-import axios from "axios";
-require("dotenv").config();
+import { Configuration, OpenAIApi } from "openai";
+const OpenAIApi.api_key = process.env.OPENAI_API_KEY;
 
-interface CompletionParams {
-  model: string;
-  prompt: string;
-  temperature?: number;
-  max_tokens?: number;
-  n?: number;
-  stop?: string | string[];
+async function generateCode(prompt: string) {
+const completions = await openai.completions.create({
+engine: 'davinci-codex',
+prompt: prompt,
+max_tokens: 1024,
+n: 1,
+stop: ['\n'],
+temperature: 0.5,
+});
+
+const { choices } = completions.data;
+const { text } = choices[0];
+return text.trim();
 }
 
-export default async (prompt: string, languages: string): Promise<string> => {
-  const OPENAI_API_KEY = process.env.OPENAI_API_KEY; // 수정된 부분
-  const model = `davinci-${languages}`;
-  const params: CompletionParams = {
-    model,
-    prompt,
-    max_tokens: 1024,
-    n: 0.9,
-    stop: "\n",
-  };
+async function example() {
+const prompts = [
+generatePrompt('cat'),
+generatePrompt('dog'),
+generatePrompt('tiger'),
+];
 
-  const response = await axios.post(
-    "https://api.openai.com/v1/completions",
-    params,
-    {
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${OPENAI_API_KEY}`,
-      },
-    }
-  );
+for (const prompt of prompts) {
+const code = await generateCode(prompt);
+console.log(`Code generated:\n${code}`);
+}
+}
 
-  const { choices } = response.data?.choices?.[0];
-  if (!choices || choices.length === 0) {
-    throw new Error("Failed to generate text.");
-  }
+function generatePrompt(query: string) {
+return `Given the query "${query}", generate a piece of code that solves the problem:
 
-  return choices[0].text.trim();
-};
+Code:
+`;
+}
+
+export { example };
+
+
+
+
+
