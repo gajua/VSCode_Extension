@@ -1,8 +1,5 @@
 import axios from "axios";
-import { languages } from "vscode";
 require("dotenv").config();
-
-const OPENAI_API_KEY = process.env.OPENAI_API_KEY;
 
 interface CompletionParams {
   model: string;
@@ -14,7 +11,7 @@ interface CompletionParams {
 }
 
 export default async (prompt: string, languages: string): Promise<string> => {
-  // const model = "text-davinci-003";
+  const OPENAI_API_KEY = process.env.OPENAI_API_KEY; // 수정된 부분
   const model = `davinci-${languages}`;
   const params: CompletionParams = {
     model,
