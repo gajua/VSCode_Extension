@@ -7,6 +7,16 @@ export function activate(context: vscode.ExtensionContext) {
   let disposable = vscode.commands.registerCommand(
     'drag-it.generateCode',
     async () => {
+      function getActiveEditorExtension(): string | undefined {
+        const editor = vscode.window.activeTextEditor;
+        if (!editor) {
+          return undefined;
+        }
+
+        return editor.document.languageId;
+      }
+
+      const extension = getActiveEditorExtension();
       const editor = vscode.window.activeTextEditor;
       if (!editor) {
         vscode.window.showErrorMessage('No active text editor found.');
@@ -23,7 +33,9 @@ export function activate(context: vscode.ExtensionContext) {
       let generatedCode: any = null;
 
       try {
-        generatedCode = await generateCode(prompt);
+        generatedCode = await generateCode(
+          `Get me command ${prompt} in ${extension} language`
+        );
       } catch (error: any) {
         vscode.window.showErrorMessage(
           `Error generating code: ${error.message}`

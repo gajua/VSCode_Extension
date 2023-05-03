@@ -1,71 +1,16 @@
-# drag-it README
-
-This is the README for your extension "drag-it". After writing up a brief description, we recommend including the following sections.
+# Drag-It
+This is a Visual Studio Code extension that helps you generate code using OpenAI's GPT-3 technology. It automatically generates code based on the file type you're currently editing, allowing you to quickly and easily generate code that fits your needs.
 
 ## Features
+- Generates code based on the file type you're currently editing
 
-Describe specific features of your extension including screenshots of your extension in action. Image paths are relative to this README file.
+- Allows you to quickly and easily generate code by selecting the text you want to use as the basis for the code and then executing the extension
 
-For example if there is an image subfolder under your extension project workspace:
+- Automatically prompts you to enter your OpenAI API key if you haven't already done so
 
-\!\[feature X\]\(images/feature-x.png\)
+## Usage
+To use Drag-It, simply select the text you want to use as the basis for the code you want to generate, and then execute the extension. You can do this by typing the command `drag-it.generateCode` in the Command Palette, or by using the keybindings `ctrl+space ctrl+enter` (Windows/Linux) or `cmd+space cmd+enter` (Mac).
 
-> Tip: Many popular extensions utilize animations. This is an excellent way to show off your extension! We recommend short, focused animations that are easy to follow.
+If you haven't already entered your OpenAI API key, the extension will prompt you to do so when you execute it for the first time. Simply enter your API key and the extension will start working immediately.
 
-## Requirements
-
-If you have any requirements or dependencies, add a section describing those and how to install and configure them.
-
-## Extension Settings
-
-Include if your extension adds any VS Code settings through the `contributes.configuration` extension point.
-
-For example:
-
-This extension contributes the following settings:
-
-* `myExtension.enable`: Enable/disable this extension.
-* `myExtension.thing`: Set to `blah` to do something.
-
-## Known Issues
-
-Calling out known issues can help limit users opening duplicate issues against your extension.
-
-## Release Notes
-
-Users appreciate release notes as you update your extension.
-
-### 1.0.0
-
-Initial release of ...
-
-### 1.0.1
-
-Fixed issue #.
-
-### 1.1.0
-
-Added features X, Y, and Z.
-
----
-
-## Following extension guidelines
-
-Ensure that you've read through the extensions guidelines and follow the best practices for creating your extension.
-
-* [Extension Guidelines](https://code.visualstudio.com/api/references/extension-guidelines)
-
-## Working with Markdown
-
-You can author your README using Visual Studio Code. Here are some useful editor keyboard shortcuts:
-
-* Split the editor (`Cmd+\` on macOS or `Ctrl+\` on Windows and Linux).
-* Toggle preview (`Shift+Cmd+V` on macOS or `Shift+Ctrl+V` on Windows and Linux).
-* Press `Ctrl+Space` (Windows, Linux, macOS) to see a list of Markdown snippets.
-
-## For more information
-
-* [Visual Studio Code's Markdown Support](http://code.visualstudio.com/docs/languages/markdown)
-* [Markdown Syntax Reference](https://help.github.com/articles/markdown-basics/)
-
-**Enjoy!**
+Happy coding!

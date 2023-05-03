@@ -2,8 +2,8 @@
   "name": "drag-it",
   "displayName": "Drag It",
   "description": "Generate code using OpenAI Codex",
-  "version": "0.0.1",
-  "publisher": "sewon_is_amazing",
+  "version": "1.0.0",
+  "publisher": "sewonisamazing",
   "engines": {
     "vscode": "^1.76.0"
   },
@@ -15,10 +15,20 @@
   ],
   "main": "./dist/extension.js",
   "contributes": {
+    "configuration": {
+      "title": "Drag-It",
+      "properties": {
+        "apiKey": {
+          "type": "string",
+          "default": ""
+        }
+      }
+    },
     "commands": [
       {
         "command": "drag-it.generateCode",
-        "title": "Generate code from selection"
+        "title": "Generate Code",
+        "category": "Code Generation"
       }
     ],
     "keybindings": [
