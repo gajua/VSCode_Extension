@@ -22,7 +22,7 @@ export default async function generateCode(prompt: string) {
 }
 
 async function getAPIKey() {
-  const config = vscode.workspace.getConfiguration('openai');
+  const config = vscode.workspace.getConfiguration('drag-it');
   const apiKey = config.get<string>('apiKey');
 
   if (apiKey) {
