@@ -37,9 +37,13 @@ export function activate(context: vscode.ExtensionContext) {
           `Get me command ${prompt} in ${extension} language`
         );
       } catch (error: any) {
-        vscode.window.showErrorMessage(
-          `Error generating code: ${error.message}`
-        );
+        console.log(error)
+        if (error.message === 'Request failed with status code 401') {
+          vscode.window.showErrorMessage('Authentication failed. Please enter your API key again.');
+          await vscode.workspace.getConfiguration('drag-it').update('apiKey', '', vscode.ConfigurationTarget.Global);
+        } else {
+          vscode.window.showErrorMessage(`Error generating code: ${error.message}`);
+        }
         return;
       }
 
